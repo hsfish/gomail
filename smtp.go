@@ -98,6 +98,8 @@ func (d *Dialer) Dial() (SendCloser, error) {
 					password: d.Password,
 					host:     d.Host,
 				}
+			} else if strings.Contains(auths, "NTLM") {
+				d.Auth = NTLMAuth(d.Host, d.Username, d.Password, NTLMVersion2)
 			} else {
 				d.Auth = smtp.PlainAuth("", d.Username, d.Password, d.Host)
 			}
